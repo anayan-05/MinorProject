@@ -1,0 +1,25 @@
+{
+  "status": "success",
+  "is_mock": true,
+  "model_version": "v1.0.0-compact-cnn-mock",
+  "schema_version": "1.0.0",
+  "generated_at": "2026-11-20T10:15:30Z",
+  "detected_cues": [
+    {
+      "cue": "screaming_shouting",
+      "confidence": 0.8842,
+      "time_offsets": [0.0, 3.0]
+    }
+  ],
+  "requires_user_confirmation": true,
+  "limitations": [
+    "Acoustic cues are statistical sound classifications, not proof of danger, crime, or distress.",
+    "Model does NOT detect assault, intent, or domestic violence.",
+    "Accuracy may degrade under heavy wind, traffic rumble, or low-cost microphone clipping.",
+    "Advisory assistance only; requires explicit user confirmation before taking any action.",
+    "Audio alone never triggers SOS or emergency contact notifications."
+  ],
+  "warnings": [
+    "Payload generated in mock mode for mobile UI integration testing."
+  ]
+}
