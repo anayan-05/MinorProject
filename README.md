@@ -10,7 +10,6 @@ Kolkata-first AI-assisted travel-safety Android prototype for women travellers (
 - `feature/navigation-sos` — **Ayushman**: Route alternatives, emergency resources & user-confirmed SOS (`navigation/`, `emergency/`)
 
 ## Reference & Rules
-- Read [`handbook/PathPilot_Complete_Handbook.md`](handbook/PathPilot_Complete_Handbook.md) before coding.
 - Use assigned branches only; never push directly to `main`, force-push, or commit secrets, personal data, raw datasets/audio, or large model weights.
 
 ## Audio ML Subsystem (`ml/audio/`, `docs/audio/`, `tests/audio/`)
