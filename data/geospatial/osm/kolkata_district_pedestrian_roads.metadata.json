@@ -1,0 +1,94 @@
+{
+  "dataset": "kolkata_district_pedestrian_roads",
+  "study_area": "Kolkata District, West Bengal, India",
+  "extraction_date_utc": "2026-11-25T17:19:25.902664+00:00",
+  "crs": "EPSG:4326",
+  "feature_count": 30946,
+  "sources": {
+    "osm_pbf": {
+      "path": "C:\\Users\\amisa\\Downloads\\PathPilot_DATA\\OSM\\eastern-zone-261124.osm.pbf",
+      "size_bytes": 247863985,
+      "sha256": "24c7bcb69567dfae3faf2761387aa983bec950f546f800181d2f5a039b122e56",
+      "osmosis_replication_timestamp_utc": "2026-11-24T21:21:23+00:00",
+      "writingprogram": "osmium/1.16.0",
+      "bbox_epsg4326": [
+        81.367492,
+        17.780565,
+        89.918288,
+        27.989553
+      ],
+      "network_filter": "pyrosm walking (pedestrian-accessible roads and paths)"
+    },
+    "boundary": {
+      "path": "C:\\Users\\amisa\\Downloads\\PathPilot_Data\\Boundaries\\Kolkata_District\\kolkata_district_boundary.geojson",
+      "source_agency": "Survey of India (SOI)",
+      "crs": "EPSG:4326",
+      "sha256": "ed04b875dea928925acb7a616192a8e1d2e01a4788bfe3017893c0c1aa4c82fa",
+      "bbox_epsg4326": [
+        88.23368584843128,
+        22.451390000895422,
+        88.4571699989479,
+        22.632849146483352
+      ]
+    }
+  },
+  "attribution": "Map data \u00a9 OpenStreetMap contributors, available under the Open Database License (ODbL). Administrative boundary: Survey of India (SOI).",
+  "pbf_coverage_check": {
+    "covered": true,
+    "pbf_bbox_epsg4326": [
+      81.367492,
+      17.780565,
+      89.918288,
+      27.989553
+    ],
+    "boundary_bbox_epsg4326": [
+      88.23368584843128,
+      22.451390000895422,
+      88.4571699989479,
+      22.632849146483352
+    ]
+  },
+  "clipping_stats": {
+    "pre_clip_feature_count": 30946,
+    "dropped_non_linear_border_artifacts": 0,
+    "post_clip_feature_count": 30946
+  },
+  "preserved_required_tags": [
+    "highway",
+    "lit",
+    "surface",
+    "name",
+    "sidewalk",
+    "opening_hours"
+  ],
+  "validation": {
+    "verified_on_disk": true,
+    "output_size_bytes": 21657356,
+    "output_sha256": "ea5a4614ca5241aff75dc91aa09118b9f4ef09af84eac1322b99e90b92034f74",
+    "crs": "EPSG:4326",
+    "feature_count": 30946,
+    "geometry_types": {
+      "LineString": 30839,
+      "MultiLineString": 107
+    },
+    "invalid_geometry_count": 0,
+    "empty_geometry_count": 0,
+    "within_boundary_bbox": true,
+    "output_bounds_epsg4326": [
+      88.2424822,
+      22.451397981250807,
+      88.45716896641945,
+      22.63270771309592
+    ],
+    "total_clipped_length_km": 3817.34,
+    "required_tag_non_null_counts": {
+      "highway": 30946,
+      "lit": 100,
+      "surface": 1523,
+      "name": 3997,
+      "sidewalk": 57,
+      "opening_hours": 0
+    }
+  },
+  "output_geojson": "C:\\Users\\amisa\\Downloads\\PathPilot_DATA\\Processed\\OSM\\kolkata_district_pedestrian_roads.geojson"
+}
