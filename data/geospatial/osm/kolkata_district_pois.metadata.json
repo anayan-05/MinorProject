@@ -1,0 +1,136 @@
+{
+  "dataset": "kolkata_district_pois",
+  "study_area": "Kolkata District, West Bengal, India",
+  "extraction_date_utc": "2026-11-25T17:41:08.616081+00:00",
+  "crs": "EPSG:4326",
+  "feature_count": 1414,
+  "category_counts": {
+    "police": 33,
+    "hospital": 210,
+    "clinic": 109,
+    "pharmacy": 55,
+    "restaurant": 199,
+    "shop": 484,
+    "bus_stop": 284,
+    "metro_station": 40
+  },
+  "sources": {
+    "osm_pbf": {
+      "path": "C:\\Users\\amisa\\Downloads\\PathPilot_DATA\\OSM\\eastern-zone-261124.osm.pbf",
+      "size_bytes": 247863985,
+      "sha256": "24c7bcb69567dfae3faf2761387aa983bec950f546f800181d2f5a039b122e56",
+      "osmosis_replication_timestamp_utc": "2026-11-24T21:21:23+00:00",
+      "writingprogram": "osmium/1.16.0",
+      "bbox_epsg4326": [
+        81.367492,
+        17.780565,
+        89.918288,
+        27.989553
+      ],
+      "custom_filter": {
+        "amenity": [
+          "police",
+          "hospital",
+          "clinic",
+          "pharmacy",
+          "restaurant"
+        ],
+        "shop": true,
+        "highway": [
+          "bus_stop"
+        ],
+        "railway": [
+          "station"
+        ],
+        "station": [
+          "subway"
+        ],
+        "subway": [
+          "yes"
+        ],
+        "public_transport": [
+          "station"
+        ]
+      }
+    },
+    "boundary": {
+      "path": "C:\\Users\\amisa\\Downloads\\PathPilot_Data\\Boundaries\\Kolkata_District\\kolkata_district_boundary.geojson",
+      "source_agency": "Survey of India (SOI)",
+      "crs": "EPSG:4326",
+      "sha256": "ed04b875dea928925acb7a616192a8e1d2e01a4788bfe3017893c0c1aa4c82fa",
+      "bbox_epsg4326": [
+        88.23368584843128,
+        22.451390000895422,
+        88.4571699989479,
+        22.632849146483352
+      ]
+    }
+  },
+  "attribution": "Map data \u00a9 OpenStreetMap contributors, available under the Open Database License (ODbL). Administrative boundary: Survey of India (SOI).",
+  "pbf_coverage_check": {
+    "covered": true,
+    "pbf_bbox_epsg4326": [
+      81.367492,
+      17.780565,
+      89.918288,
+      27.989553
+    ],
+    "boundary_bbox_epsg4326": [
+      88.23368584843128,
+      22.451390000895422,
+      88.4571699989479,
+      22.632849146483352
+    ]
+  },
+  "processing_stats": {
+    "raw_pyrosm_rows": 1576,
+    "matched_target_category_rows": 1414,
+    "excluded_non_target_rows": 162,
+    "duplicates_removed_by_osm_id": 0,
+    "duplicates_removed_by_exact_geometry": 0,
+    "dropped_clip_artifacts": 0,
+    "post_clip_feature_count": 1414
+  },
+  "validation": {
+    "verified_on_disk": true,
+    "output_size_bytes": 853744,
+    "output_sha256": "721345dada87ec8bb6955839b4628dfea583c6c02da49ad4c44131b7b018742e",
+    "crs": "EPSG:4326",
+    "feature_count": 1414,
+    "category_counts": {
+      "police": 33,
+      "hospital": 210,
+      "clinic": 109,
+      "pharmacy": 55,
+      "restaurant": 199,
+      "shop": 484,
+      "bus_stop": 284,
+      "metro_station": 40
+    },
+    "geometry_types": {
+      "Point": 1302,
+      "Polygon": 112
+    },
+    "invalid_geometry_count": 0,
+    "empty_geometry_count": 0,
+    "within_boundary_bbox": true,
+    "output_bounds_epsg4326": [
+      88.2605445,
+      22.4580105,
+      88.4123496,
+      22.6325986
+    ],
+    "attribute_non_null_counts": {
+      "name": 1345,
+      "amenity": 614,
+      "shop": 484,
+      "highway": 284,
+      "railway": 40,
+      "opening_hours": 175,
+      "operator": 93,
+      "id": 1414,
+      "osm_type": 1414
+    }
+  },
+  "output_geojson": "C:\\Users\\amisa\\Downloads\\PathPilot_DATA\\Processed\\OSM\\kolkata_district_pois.geojson"
+}
