@@ -378,11 +378,35 @@ class AudioPreprocessor:
             signal = carrier
 
         elif cue_type == "glass_breaking":
-            t_decay = np.exp(-12.0 * t)
-            shatter = np.random.normal(0, 0.5, num_samples) * t_decay
-            high_ring = 0.3 * np.sin(2 * np.pi * 4200 * t) * t_decay
-            high_ring2 = 0.2 * np.sin(2 * np.pi * 5800 * t) * t_decay
-            signal = shatter + high_ring + high_ring2
+            # Realistic physical acoustic synthesis of shattering glass:
+            # 1. Primary fracture crack (wideband impulse with sharp envelope)
+            t_crack = np.exp(-18.0 * t)
+            crack_burst = np.random.normal(0, 0.5, num_samples) * t_crack
+
+            # 2. Resonant high-frequency crystal/glass ringing (modal vibrations at 3.8k, 5.2k, 6.8k, 7.5k Hz)
+            modal_ring = (
+                0.35 * np.sin(2 * np.pi * 3800 * t) * np.exp(-10.0 * t)
+                + 0.30 * np.sin(2 * np.pi * 5200 * t) * np.exp(-14.0 * t)
+                + 0.25 * np.sin(2 * np.pi * 6800 * t) * np.exp(-16.0 * t)
+                + 0.15 * np.sin(2 * np.pi * 7500 * t) * np.exp(-20.0 * t)
+            )
+
+            # 3. Cascading glass shard bounces & fragments (tinkling across 0.1s to 1.2s)
+            shard_tinkle = np.zeros(num_samples, dtype=np.float32)
+            shard_offsets = [0.12, 0.28, 0.45, 0.72, 1.05]
+            shard_freqs = [4400, 5800, 6300, 4900, 7200]
+            for off, freq in zip(shard_offsets, shard_freqs):
+                shard_idx = int(off * self.sample_rate)
+                if shard_idx < num_samples:
+                    dt = t[: num_samples - shard_idx]
+                    shard_env = np.exp(-28.0 * dt)
+                    shard_sig = (
+                        np.random.normal(0, 0.25, len(dt))
+                        + 0.35 * np.sin(2 * np.pi * freq * dt)
+                    ) * shard_env
+                    shard_tinkle[shard_idx:] += shard_sig.astype(np.float32)
+
+            signal = crack_burst + modal_ring + shard_tinkle
 
         elif cue_type == "impact_crash":
             t_decay = np.exp(-8.0 * t)

@@ -129,12 +129,14 @@ def build_blended_dataset(
             else:
                 test_samples.append(s)
 
-    # 2. Add vocal screaming_shouting and mechanical impact_crash waveforms across folds 1-5
-    for class_id in [1, 4]:
+    # 2. Add augmented vocal screaming_shouting, glass_breaking, and mechanical impact_crash waveforms across folds 1-5
+    for class_id in [1, 3, 4]:
         class_name = PathPilotAudioCNN.CLASS_NAMES[class_id]
-        for i in range(synthetic_samples_per_cue):
+        # Glass breaking is heavily augmented to boost high-frequency transient distinction
+        n_samples = 60 if class_id == 3 else synthetic_samples_per_cue
+        for i in range(n_samples):
             wf = preprocessor.generate_synthetic_cue(class_name)
-            wf = wf + np.random.normal(0, 0.02, wf.shape).astype(np.float32)
+            wf = wf + np.random.normal(0, 0.015, wf.shape).astype(np.float32)
 
             group_idx = (i % 5) + 1
             sample = {
@@ -152,11 +154,26 @@ def build_blended_dataset(
             else:
                 test_samples.append(sample)
 
+    # 3. Augment real ESC-50 glass breaking training samples to ensure balanced acoustic representation
+    if ESC50DatasetLoader.is_available():
+        for s in real_samples:
+            if s["label_id"] == 3 and s["fold"] in [1, 2, 3]:
+                orig_wf = s["waveform"]
+                aug_wf = orig_wf + np.random.normal(0, 0.01, orig_wf.shape).astype(np.float32)
+                train_samples.append({
+                    "clip_id": f"aug_real_{s['clip_id']}",
+                    "label_id": 3,
+                    "class_name": "glass_breaking",
+                    "split_group": s["split_group"],
+                    "waveform": aug_wf,
+                    "fold": s["fold"],
+                })
+
     return train_samples, val_samples, test_samples
 
 
 def train_audio_model(
-    epochs: int = 8,
+    epochs: int = 10,
     batch_size: int = 16,
     learning_rate: float = 0.001,
     artifacts_dir: str = "artifacts/models",
@@ -168,7 +185,7 @@ def train_audio_model(
     set_seed(seed)
     preprocessor = AudioPreprocessor(n_mels=128)
 
-    print("Building blended dataset (Real ESC-50 + Augmented Vocal Screams & Impacts)...", flush=True)
+    print("Building blended dataset (Real ESC-50 + Augmented Vocal Screams, Glass, Impacts)...", flush=True)
     train_data, val_data, test_data = build_blended_dataset(preprocessor)
     dataset_source = "ESC-50 Real Audio + Augmented Acoustic Cues"
 
@@ -216,7 +233,8 @@ def train_audio_model(
 
         model = PathPilotAudioCNN(num_classes=5).to(device)
 
-        criterion = nn.CrossEntropyLoss(label_smoothing=0.05)
+        class_weights = torch.tensor([0.85, 1.15, 1.10, 1.45, 1.05], dtype=torch.float32).to(device)
+        criterion = nn.CrossEntropyLoss(weight=class_weights, label_smoothing=0.03)
         optimizer = optim.AdamW(model.parameters(), lr=learning_rate, weight_decay=1e-3)
         scheduler = optim.lr_scheduler.CosineAnnealingLR(optimizer, T_max=epochs, eta_min=1e-5)
 
