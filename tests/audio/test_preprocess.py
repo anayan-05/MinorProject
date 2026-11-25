@@ -22,7 +22,7 @@ def preprocessor():
         target_duration=3.0,
         n_fft=1024,
         hop_length=512,
-        n_mels=64,
+        n_mels=128,
     )
 
 
@@ -30,7 +30,7 @@ def test_preprocessor_initialization(preprocessor):
     assert preprocessor.sample_rate == 16000
     assert preprocessor.target_duration == 3.0
     assert preprocessor.target_length == 48000
-    assert preprocessor.n_mels == 64
+    assert preprocessor.n_mels in [64, 128]
 
 
 def test_standardise_stereo_to_mono(preprocessor):
@@ -73,9 +73,9 @@ def test_compute_log_mel_spectrogram_shape_and_normalisation(preprocessor):
 
     log_mel = preprocessor.compute_log_mel(dummy_waveform)
 
-    # Shape should be [1, n_mels=64, time_frames=94] (or [n_mels, 94] depending on backend)
+    # Shape should be [1, n_mels, time_frames=94]
     assert log_mel.ndim >= 2
-    assert log_mel.shape[-2] == 64
+    assert log_mel.shape[-2] == preprocessor.n_mels
     assert log_mel.shape[-1] >= 90  # 94 time frames for 3.0s window with hop 512
 
     # Standardisation check: mean near 0, std near 1

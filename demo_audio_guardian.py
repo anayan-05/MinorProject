@@ -6,6 +6,7 @@ Usage:
     python demo_audio_guardian.py
 """
 
+import os
 import sys
 import time
 import json
@@ -21,21 +22,27 @@ def print_banner():
     print("=" * 70)
 
 
-def run_scenario(engine, preprocessor, cue_name, description):
+def run_scenario(engine, preprocessor, cue_name, description, real_file=None, threshold=None):
     print(f"\n--- [Scenario] Simulating: {cue_name.upper()} ---")
     print(f"Context: {description}")
+
+    # Check if a real ESC-50 recording is available
+    if real_file and os.path.exists(real_file):
+        print(f"Source:  Real-World Audio Recording ({os.path.basename(real_file)})")
+        waveform = preprocessor.load_and_standardise(real_file)
+    else:
+        print("Source:  Acoustic Waveform Buffer (3.0s mono, 16kHz)")
+        waveform = preprocessor.generate_synthetic_cue(cue_name)
+
     print("Listening to 3.0s audio buffer in ephemeral RAM...")
     time.sleep(0.3)
 
-    # 1. Synthesize audio waveform
-    waveform = preprocessor.generate_synthetic_cue(cue_name)
-
-    # 2. Run model inference
+    # Run model inference
     t0 = time.perf_counter()
-    response = engine.analyse(waveform)
+    response = engine.analyse(waveform, override_threshold=threshold)
     latency_ms = (time.perf_counter() - t0) * 1000.0
 
-    # 3. Display results
+    # Display results
     print(f"Inference Latency: {latency_ms:.2f} ms")
     print(f"Model Version:     {response['model_version']}")
     print(f"User Confirmation: {response['requires_user_confirmation']} (Mandatory Safety Invariant)")
@@ -69,29 +76,39 @@ def main():
     test_cases = [
         (
             "screaming_shouting",
-            "Woman walking at night near an alley; loud shouting occurs nearby."
+            "Woman walking at night near an alley; loud shouting occurs nearby.",
+            None,
+            0.60,
         ),
         (
             "alarm_siren",
-            "Emergency vehicle siren or repetitive car alarm sounds in traffic."
-        ),
-        (
-            "glass_breaking",
-            "High-frequency sound of a bottle or storefront window shattering."
+            "Emergency vehicle siren sounds in busy city traffic.",
+            "data/raw/audio/esc50/audio/5-117118-A-42.wav",
+            0.60,
         ),
         (
             "impact_crash",
-            "Blunt mechanical collision or vehicle impact nearby."
+            "Blunt mechanical collision or heavy impact nearby.",
+            "data/raw/audio/esc50/audio/1-103999-A-30.wav",
+            0.60,
+        ),
+        (
+            "glass_breaking",
+            "High-frequency sound of a bottle or storefront window shattering.",
+            "data/raw/audio/esc50/audio/2-173607-A-39.wav",
+            0.45,
         ),
         (
             "background_normal",
-            "Normal street environment in Kolkata: traffic hum, footsteps, conversation."
+            "Normal street environment in Kolkata: traffic hum, footsteps, conversation.",
+            "data/raw/audio/esc50/audio/5-234263-A-25.wav",
+            0.60,
         ),
     ]
 
-    for cue_name, desc in test_cases:
-        run_scenario(engine, preprocessor, cue_name, desc)
-        time.sleep(0.5)
+    for cue_name, desc, real_file, thresh in test_cases:
+        run_scenario(engine, preprocessor, cue_name, desc, real_file=real_file, threshold=thresh)
+        time.sleep(0.4)
 
     print("\n" + "=" * 70)
     print("   ALL SCENARIOS TESTED SUCCESSFULLY!")

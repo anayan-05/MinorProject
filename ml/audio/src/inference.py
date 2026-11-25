@@ -43,7 +43,7 @@ class AudioInferenceEngine:
     """Production inference engine for PathPilot acoustic cue analysis."""
 
     SCHEMA_VERSION = "1.0.0"
-    DEFAULT_MODEL_VERSION = "v1.0.0-compact-cnn"
+    DEFAULT_MODEL_VERSION = "v1.1.0-resnet-se-attention"
     DEFAULT_CONFIDENCE_THRESHOLD = 0.60
 
     STANDARD_LIMITATIONS = [
