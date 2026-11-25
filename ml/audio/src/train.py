@@ -107,6 +107,114 @@ class ESC50DatasetLoader:
         return samples
 
 
+class UrbanSound8KDatasetLoader:
+    """Loads official UrbanSound8K dataset from data/raw/audio/urbansound8k/."""
+
+    US8K_DIR = "data/raw/audio/urbansound8k"
+    US8K_CSV = "data/raw/audio/urbansound8k/metadata/UrbanSound8K.csv"
+    US8K_AUDIO = "data/raw/audio/urbansound8k/audio"
+
+    CLASS_MAPPING = {
+        "siren": 2,             # alarm_siren
+        "car_horn": 2,          # alarm_siren
+        # Urban ambient noise baseline
+        "air_conditioner": 0,
+        "children_playing": 0,
+        "dog_bark": 0,
+        "drilling": 0,
+        "engine_idling": 0,
+        "jackhammer": 0,
+        "street_music": 0,
+    }
+
+    @classmethod
+    def is_available(cls) -> bool:
+        return os.path.exists(cls.US8K_CSV) and os.path.exists(cls.US8K_AUDIO)
+
+    @classmethod
+    def load_samples(cls) -> List[Dict[str, Any]]:
+        samples = []
+        if not cls.is_available():
+            return samples
+        with open(cls.US8K_CSV, "r", encoding="utf-8") as f:
+            reader = csv.DictReader(f)
+            for row in reader:
+                class_name = row.get("class", "")
+                if class_name in cls.CLASS_MAPPING:
+                    target_id = cls.CLASS_MAPPING[class_name]
+                    fold_num = int(row.get("fold", 1))
+                    file_name = row.get("slice_file_name", "")
+                    audio_path = os.path.join(cls.US8K_AUDIO, f"fold{fold_num}", file_name)
+                    if os.path.exists(audio_path):
+                        # Map US8K 10 folds to 5 PathPilot evaluation folds:
+                        # folds 1-2 -> 1, 3-4 -> 2, 5-6 -> 3 (train), 7-8 -> 4 (val), 9-10 -> 5 (test)
+                        mapped_fold = min(5, (fold_num + 1) // 2)
+                        samples.append({
+                            "clip_id": f"us8k_{file_name}",
+                            "file_path": audio_path,
+                            "label_id": target_id,
+                            "class_name": PathPilotAudioCNN.CLASS_NAMES[target_id],
+                            "split_group": f"fold_{mapped_fold}",
+                            "fold": mapped_fold,
+                        })
+        return samples
+
+
+class FSD50KDatasetLoader:
+    """Loads official FSD50K sound event recordings from data/raw/audio/fsd50k/."""
+
+    FSD50K_DIR = "data/raw/audio/fsd50k"
+    FSD50K_DEV_CSV = "data/raw/audio/fsd50k/FSD50K.ground_truth/dev_ground_truth.csv"
+    FSD50K_AUDIO = "data/raw/audio/fsd50k/FSD50K.dev_audio"
+
+    CUE_TAG_MAP = {
+        "Screaming": 1,
+        "Shout": 1,
+        "Yell": 1,
+        "Siren": 2,
+        "Emergency_vehicle": 2,
+        "Glass": 3,
+        "Shatter": 3,
+        "Crash": 4,
+        "Collision": 4,
+    }
+
+    @classmethod
+    def is_available(cls) -> bool:
+        return os.path.exists(cls.FSD50K_DEV_CSV) and os.path.exists(cls.FSD50K_AUDIO)
+
+    @classmethod
+    def load_samples(cls) -> List[Dict[str, Any]]:
+        samples = []
+        if not cls.is_available():
+            return samples
+        with open(cls.FSD50K_DEV_CSV, "r", encoding="utf-8") as f:
+            reader = csv.DictReader(f)
+            for row in reader:
+                labels = row.get("labels", "").split(",")
+                matched_target = None
+                for lbl in labels:
+                    lbl_clean = lbl.strip()
+                    if lbl_clean in cls.CUE_TAG_MAP:
+                        matched_target = cls.CUE_TAG_MAP[lbl_clean]
+                        break
+                if matched_target is not None:
+                    fname = f"{row['fname']}.wav"
+                    fpath = os.path.join(cls.FSD50K_AUDIO, fname)
+                    if os.path.exists(fpath):
+                        split = row.get("split", "train")
+                        fold_num = 4 if split == "val" else (5 if split == "test" else 1)
+                        samples.append({
+                            "clip_id": f"fsd50k_{fname}",
+                            "file_path": fpath,
+                            "label_id": matched_target,
+                            "class_name": PathPilotAudioCNN.CLASS_NAMES[matched_target],
+                            "split_group": f"fold_{fold_num}",
+                            "fold": fold_num,
+                        })
+        return samples
+
+
 def build_blended_dataset(
     preprocessor: AudioPreprocessor,
     synthetic_samples_per_cue: int = 40,
@@ -121,6 +229,30 @@ def build_blended_dataset(
     if ESC50DatasetLoader.is_available():
         real_samples = ESC50DatasetLoader.load_samples()
         for s in real_samples:
+            s["waveform"] = preprocessor.load_and_standardise(s["file_path"])
+            if s["fold"] in [1, 2, 3]:
+                train_samples.append(s)
+            elif s["fold"] == 4:
+                val_samples.append(s)
+            else:
+                test_samples.append(s)
+
+    # 2. Load Real UrbanSound8K recordings if available
+    if UrbanSound8KDatasetLoader.is_available():
+        us8k_samples = UrbanSound8KDatasetLoader.load_samples()
+        for s in us8k_samples:
+            s["waveform"] = preprocessor.load_and_standardise(s["file_path"])
+            if s["fold"] in [1, 2, 3]:
+                train_samples.append(s)
+            elif s["fold"] == 4:
+                val_samples.append(s)
+            else:
+                test_samples.append(s)
+
+    # 3. Load Real FSD50K recordings if available
+    if FSD50KDatasetLoader.is_available():
+        fsd50k_samples = FSD50KDatasetLoader.load_samples()
+        for s in fsd50k_samples:
             s["waveform"] = preprocessor.load_and_standardise(s["file_path"])
             if s["fold"] in [1, 2, 3]:
                 train_samples.append(s)
