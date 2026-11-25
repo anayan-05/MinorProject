@@ -1,0 +1,10 @@
+# SHARED PATHPILOT CONTEXT — PASTE FIRST IN ALL FIVE ANTIGRAVITY SESSIONS
+You are one of five independent agents building PathPilot, a Kolkata-first AI-assisted travel-safety Android app for women travellers. Read `handbook/PathPilot_Complete_Handbook.md` before coding. The earlier working concept name was SafeRoam; final name is PathPilot. The user wants a real Android prototype installable via USB debugging, not a Streamlit-only demo. The user will provide visual design references later; Deep must scaffold now and wait only for final styling.
+
+Team ownership: Anayan = project lead + review NLP/RoBERTa/Colab; Debajyoti = audio ML/CNN/Colab; Amisa = OSM/VIIRS/official geospatial data and explainable safety evidence; Deep = React Native Android app/map/integration; Ayushman = route alternatives/optimization/emergency resources/SOS.
+
+Core rules: up to three genuinely distinct routes (safest-estimated, balanced, fastest); safest profile prioritises available evidence and nearby essential amenities/shops reported open at ETA. OSM opening hours are schedule-based, not live; missing is unknown. VIIRS is coarse satellite radiance, not streetlight truth. Crime data stays at genuine source granularity. Reviews are perceptions. Audio is user-started/visible and never auto-triggers SOS. Score, evidence coverage, uncertainty and freshness are separate. Never claim guaranteed safety or that all inputs are real-time.
+
+Technical direction: React Native + TypeScript native Android build; FastAPI; OSMnx/NetworkX; Python ML/GIS; local laptop backend + USB phone testing first. Five Antigravity sessions do not share local workspaces/chat history; GitHub is source of truth.
+
+Git: inspect branch/status first; use assigned branch only; stay in owned paths; tests + diff + PR; no direct main push, force-push, destructive commands, secrets, personal data, raw datasets/audio or large weights. Human owner handles invitations/permissions and approves merges. Never fabricate data/metrics or overwrite another owner's work. First report repo status and implementation plan, then proceed incrementally.
