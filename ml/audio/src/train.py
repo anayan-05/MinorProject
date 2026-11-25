@@ -233,7 +233,7 @@ def train_audio_model(
 
         model = PathPilotAudioCNN(num_classes=5).to(device)
 
-        class_weights = torch.tensor([0.85, 1.15, 1.10, 1.45, 1.05], dtype=torch.float32).to(device)
+        class_weights = torch.tensor([0.80, 1.15, 1.15, 1.20, 1.20], dtype=torch.float32).to(device)
         criterion = nn.CrossEntropyLoss(weight=class_weights, label_smoothing=0.03)
         optimizer = optim.AdamW(model.parameters(), lr=learning_rate, weight_decay=1e-3)
         scheduler = optim.lr_scheduler.CosineAnnealingLR(optimizer, T_max=epochs, eta_min=1e-5)
