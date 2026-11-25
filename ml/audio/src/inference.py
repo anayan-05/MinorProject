@@ -127,6 +127,8 @@ class AudioInferenceEngine:
         # 1. Standardise and preprocess audio
         try:
             waveform = self.preprocessor.load_and_standardise(audio_input, input_sample_rate=sample_rate)
+            # Apply low-frequency wind turbulence and handling bump filter (<60Hz)
+            waveform = self.preprocessor.filter_wind_rumble(waveform)
         except Exception as e:
             return {
                 "status": "error",
@@ -139,6 +141,14 @@ class AudioInferenceEngine:
                 "limitations": self.STANDARD_LIMITATIONS,
                 "warnings": [f"Audio decoding failure: {str(e)}"],
             }
+
+        # Check ambient SNR and pocket rustle
+        snr_db = self.preprocessor.estimate_snr_db(waveform)
+        is_rustle, _ = self.preprocessor.detect_pocket_rustle(waveform)
+        if snr_db < 6.0:
+            warnings.append(f"Acoustic environment has high ambient noise / low SNR ({snr_db:.1f} dB).")
+        if is_rustle:
+            warnings.append("Microphone fabric friction or pocket rustle detected; advisory thresholds adjusted.")
 
         # 2. Extract Log-Mel Spectrogram
         log_mel = self.preprocessor.compute_log_mel(waveform)

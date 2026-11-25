@@ -203,6 +203,66 @@ class AudioPreprocessor:
             return torch.from_numpy(arr)
         return arr
 
+    def filter_wind_rumble(self, waveform: Any, cutoff_hz: float = 60.0) -> Any:
+        """Applies high-pass filtering to suppress <60Hz microphone wind turbulence and physical handling bumps."""
+        is_tensor = HAS_TORCH and isinstance(waveform, torch.Tensor)
+        if is_tensor:
+            arr = waveform.detach().cpu().numpy().copy()
+        else:
+            arr = np.array(waveform, dtype=np.float32).copy()
+
+        # Fast 1st-order IIR high-pass filter: y[i] = alpha * (y[i-1] + x[i] - x[i-1])
+        dt = 1.0 / self.sample_rate
+        rc = 1.0 / (2.0 * np.pi * cutoff_hz)
+        alpha = rc / (rc + dt)
+
+        filtered = np.zeros_like(arr)
+        for ch in range(arr.shape[0]):
+            sig = arr[ch]
+            out = np.zeros_like(sig)
+            for i in range(1, len(sig)):
+                out[i] = alpha * (out[i - 1] + sig[i] - sig[i - 1])
+            filtered[ch] = out
+
+        if is_tensor:
+            return torch.from_numpy(filtered).to(waveform.device)
+        return filtered
+
+    def estimate_snr_db(self, waveform: Any) -> float:
+        """Estimates acoustic Signal-to-Noise Ratio (SNR) in dB from the waveform envelope."""
+        if HAS_TORCH and isinstance(waveform, torch.Tensor):
+            sig = waveform.detach().cpu().numpy().squeeze()
+        else:
+            sig = np.array(waveform).squeeze()
+
+        frame_size = int(self.sample_rate * 0.05)  # 50ms frames
+        if len(sig) < frame_size:
+            return 20.0
+        n_frames = len(sig) // frame_size
+        energies = [float(np.mean(sig[i * frame_size : (i + 1) * frame_size] ** 2)) for i in range(n_frames)]
+        energies = np.array(energies) + 1e-10
+
+        signal_power = float(np.percentile(energies, 95))
+        noise_power = float(np.percentile(energies, 10))
+        snr = 10.0 * np.log10(signal_power / noise_power)
+        return float(np.clip(snr, -10.0, 50.0))
+
+    def detect_pocket_rustle(self, waveform: Any) -> Tuple[bool, float]:
+        """Detects whether sound is dominated by fabric friction inside a pocket or handbag."""
+        if HAS_TORCH and isinstance(waveform, torch.Tensor):
+            sig = waveform.detach().cpu().numpy().squeeze()
+        else:
+            sig = np.array(waveform).squeeze()
+
+        zero_crossings = np.sum(np.diff(np.sign(sig + 1e-12)) != 0) / float(len(sig))
+        rms = np.sqrt(np.mean(sig ** 2) + 1e-10)
+        peak = np.max(np.abs(sig))
+        crest_factor = peak / rms
+
+        is_rustle = bool(zero_crossings > 0.30 and crest_factor < 3.2)
+        rustle_confidence = float(np.clip(zero_crossings / 0.50, 0.0, 1.0))
+        return is_rustle, rustle_confidence
+
     def compute_log_mel_numpy(self, waveform_arr: np.ndarray) -> np.ndarray:
         """Pure NumPy computation of log-Mel spectrogram with current n_mels."""
         if waveform_arr.ndim == 2:
