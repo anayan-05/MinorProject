@@ -67,11 +67,17 @@ class AudioInferenceEngine:
         self.model = PathPilotAudioCNN(num_classes=5)
         self.model_version = self.DEFAULT_MODEL_VERSION
 
+        # Default to trained weights if available and not explicitly provided
+        resolved_weights = weights_path
+        default_pt_path = "artifacts/models/pathpilot_audio_cnn_v1.pt"
+        if resolved_weights is None and os.path.exists(default_pt_path) and not is_mock:
+            resolved_weights = default_pt_path
+
         if HAS_TORCH and torch is not None:
             try:
                 self.device = torch.device(device or ("cuda" if torch.cuda.is_available() else "cpu"))
-                if weights_path and os.path.exists(weights_path) and not is_mock:
-                    checkpoint = torch.load(weights_path, map_location=self.device)
+                if resolved_weights and os.path.exists(resolved_weights) and not is_mock:
+                    checkpoint = torch.load(resolved_weights, map_location=self.device)
                     if isinstance(checkpoint, dict) and "model_state_dict" in checkpoint:
                         self.model.load_state_dict(checkpoint["model_state_dict"])
                         self.model_version = checkpoint.get("model_version", self.DEFAULT_MODEL_VERSION)

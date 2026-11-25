@@ -163,11 +163,14 @@ class PathPilotAudioCNN(BaseClass):
 
     def predict_proba(self, x: Any) -> Any:
         """Computes softmax probabilities."""
+        self.eval()
+        if HAS_TORCH and torch is not None:
+            with torch.no_grad():
+                logits = self.forward(x)
+                if isinstance(logits, torch.Tensor):
+                    return F.softmax(logits, dim=-1)
+
         logits = self.forward(x)
-
-        if HAS_TORCH and isinstance(logits, torch.Tensor):
-            return F.softmax(logits, dim=-1)
-
         # NumPy softmax
         exp_logits = np.exp(logits - np.max(logits, axis=-1, keepdims=True))
         probs = exp_logits / np.sum(exp_logits, axis=-1, keepdims=True)
