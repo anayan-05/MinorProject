@@ -1,0 +1,48 @@
+{
+  "schema_version": "1.0.0",
+  "generated_at": "2026-11-25T16:30:00+00:00",
+  "location_id": "kmc_ward_063_park_street",
+  "coordinates": [88.3516, 22.5535],
+  "model_version": "mock-fixture-v1.0.0",
+  "model_domain": "mock_contract_fixture",
+  "is_mock": true,
+  "results": [
+    {
+      "review_id": "mock_rev_001",
+      "location_id": "kmc_ward_063_park_street",
+      "aspect": "lighting",
+      "sentiment": "positive",
+      "confidence": 0.89,
+      "evidence_text": "Bright street lamps along the main Park Street frontage near the metro exit.",
+      "source_id": "mock_fixture",
+      "source_date": "2026-11-10T18:30:00+05:30",
+      "anonymised": true,
+      "model_version": "mock-fixture-v1.0.0",
+      "limitations": [
+        "MOCK FIXTURE DATA FOR UI/GEOSPATIAL INTEGRATION TESTING ONLY.",
+        "Review-derived aspect/sentiment reflects subjective perceptions, not verified safety facts.",
+        "Does not compute or guarantee route safety."
+      ]
+    },
+    {
+      "review_id": "mock_rev_002",
+      "location_id": "kmc_ward_063_park_street",
+      "aspect": "road_condition",
+      "sentiment": "negative",
+      "confidence": 0.82,
+      "evidence_text": "Side lane pavement is uneven near ongoing utility work.",
+      "source_id": "mock_fixture",
+      "source_date": "2026-11-08T20:15:00+05:30",
+      "anonymised": true,
+      "model_version": "mock-fixture-v1.0.0",
+      "limitations": [
+        "MOCK FIXTURE DATA FOR UI/GEOSPATIAL INTEGRATION TESTING ONLY.",
+        "Review-derived aspect/sentiment reflects subjective perceptions, not verified safety facts.",
+        "Does not compute or guarantee route safety."
+      ]
+    }
+  ],
+  "warnings": [
+    "is_mock=true: synthetic contract fixture for integration testing only; not real Kolkata review data."
+  ]
+}
