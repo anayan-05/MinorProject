@@ -1,0 +1,44 @@
+clip_id,source_dataset,source_label,mapped_label,licence,allowed_use,sample_rate,duration_seconds,split_group,included,exclusion_reason
+esc50_1-100032-A-0,ESC-50,dog,background_normal,CC BY-NC 3.0,Research/Academic Prototype,44100,5.0,fold_1,TRUE,none
+esc50_1-17092-A-27,ESC-50,screaming,screaming_shouting,CC BY-NC 3.0,Research/Academic Prototype,44100,5.0,fold_1,TRUE,none
+esc50_2-10110-A-27,ESC-50,screaming,screaming_shouting,CC BY-NC 3.0,Research/Academic Prototype,44100,5.0,fold_2,TRUE,none
+esc50_3-10290-A-27,ESC-50,screaming,screaming_shouting,CC BY-NC 3.0,Research/Academic Prototype,44100,5.0,fold_3,TRUE,none
+esc50_4-10332-A-27,ESC-50,screaming,screaming_shouting,CC BY-NC 3.0,Research/Academic Prototype,44100,5.0,fold_4,TRUE,none
+esc50_5-10444-A-27,ESC-50,screaming,screaming_shouting,CC BY-NC 3.0,Research/Academic Prototype,44100,5.0,fold_5,TRUE,none
+esc50_1-26143-A-41,ESC-50,chainsaw,background_normal,CC BY-NC 3.0,Research/Academic Prototype,44100,5.0,fold_1,TRUE,none
+esc50_1-29532-A-42,ESC-50,siren,alarm_siren,CC BY-NC 3.0,Research/Academic Prototype,44100,5.0,fold_1,TRUE,none
+esc50_2-30114-A-42,ESC-50,siren,alarm_siren,CC BY-NC 3.0,Research/Academic Prototype,44100,5.0,fold_2,TRUE,none
+esc50_3-31202-A-42,ESC-50,siren,alarm_siren,CC BY-NC 3.0,Research/Academic Prototype,44100,5.0,fold_3,TRUE,none
+esc50_4-32001-A-42,ESC-50,siren,alarm_siren,CC BY-NC 3.0,Research/Academic Prototype,44100,5.0,fold_4,TRUE,none
+esc50_5-33129-A-42,ESC-50,siren,alarm_siren,CC BY-NC 3.0,Research/Academic Prototype,44100,5.0,fold_5,TRUE,none
+esc50_1-34098-A-43,ESC-50,car_horn,alarm_siren,CC BY-NC 3.0,Research/Academic Prototype,44100,5.0,fold_1,TRUE,none
+esc50_2-35112-A-43,ESC-50,car_horn,alarm_siren,CC BY-NC 3.0,Research/Academic Prototype,44100,5.0,fold_2,TRUE,none
+esc50_1-36104-A-44,ESC-50,engine,background_normal,CC BY-NC 3.0,Research/Academic Prototype,44100,5.0,fold_1,TRUE,none
+esc50_1-37210-A-46,ESC-50,church_bells,background_normal,CC BY-NC 3.0,Research/Academic Prototype,44100,5.0,fold_1,TRUE,none
+esc50_1-38100-A-47,ESC-50,airplane,background_normal,CC BY-NC 3.0,Research/Academic Prototype,44100,5.0,fold_1,TRUE,none
+esc50_1-43760-A-26,ESC-50,laughter,background_normal,CC BY-NC 3.0,Research/Academic Prototype,44100,5.0,fold_1,TRUE,none
+esc50_1-50622-A-39,ESC-50,glass_breaking,glass_breaking,CC BY-NC 3.0,Research/Academic Prototype,44100,5.0,fold_1,TRUE,none
+esc50_2-51203-A-39,ESC-50,glass_breaking,glass_breaking,CC BY-NC 3.0,Research/Academic Prototype,44100,5.0,fold_2,TRUE,none
+esc50_3-52401-A-39,ESC-50,glass_breaking,glass_breaking,CC BY-NC 3.0,Research/Academic Prototype,44100,5.0,fold_3,TRUE,none
+esc50_4-53110-A-39,ESC-50,glass_breaking,glass_breaking,CC BY-NC 3.0,Research/Academic Prototype,44100,5.0,fold_4,TRUE,none
+esc50_5-54228-A-39,ESC-50,glass_breaking,glass_breaking,CC BY-NC 3.0,Research/Academic Prototype,44100,5.0,fold_5,TRUE,none
+us8k_100032-3-0-0,UrbanSound8K,dog_bark,background_normal,CC BY-NC 3.0,Research/Academic Prototype,44100,4.0,fold_1,TRUE,none
+us8k_100263-2-0-117,UrbanSound8K,children_playing,background_normal,CC BY-NC 3.0,Research/Academic Prototype,44100,4.0,fold_2,TRUE,none
+us8k_100648-1-0-0,UrbanSound8K,car_horn,alarm_siren,CC BY-NC 3.0,Research/Academic Prototype,44100,4.0,fold_3,TRUE,none
+us8k_100652-3-0-0,UrbanSound8K,gun_shot,impact_crash,CC BY-NC 3.0,Research/Academic Prototype,44100,4.0,fold_4,FALSE,unsupported_gunshot_not_in_target_taxonomy
+us8k_100852-0-0-0,UrbanSound8K,air_conditioner,background_normal,CC BY-NC 3.0,Research/Academic Prototype,44100,4.0,fold_5,TRUE,none
+us8k_101387-8-0-0,UrbanSound8K,siren,alarm_siren,CC BY-NC 3.0,Research/Academic Prototype,44100,4.0,fold_6,TRUE,none
+us8k_101848-9-0-0,UrbanSound8K,street_music,background_normal,CC BY-NC 3.0,Research/Academic Prototype,44100,4.0,fold_7,TRUE,none
+us8k_102854-8-0-0,UrbanSound8K,siren,alarm_siren,CC BY-NC 3.0,Research/Academic Prototype,44100,4.0,fold_8,TRUE,none
+us8k_103074-7-0-0,UrbanSound8K,jackhammer,background_normal,CC BY-NC 3.0,Research/Academic Prototype,44100,4.0,fold_9,TRUE,none
+us8k_103246-4-0-0,UrbanSound8K,drilling,background_normal,CC BY-NC 3.0,Research/Academic Prototype,44100,4.0,fold_10,TRUE,none
+fsd50k_10192,FSD50K,Screaming,screaming_shouting,CC0 1.0,Permissive Commercial & Non-Commercial,44100,3.2,dev_split_1,TRUE,none
+fsd50k_10482,FSD50K,Yell,screaming_shouting,CC-BY 3.0,Permissive with Attribution,44100,2.8,dev_split_1,TRUE,none
+fsd50k_10842,FSD50K,Shatter_and_Glass,glass_breaking,CC-BY 4.0,Permissive with Attribution,44100,3.5,dev_split_2,TRUE,none
+fsd50k_11204,FSD50K,Glass_break,glass_breaking,CC0 1.0,Permissive Commercial & Non-Commercial,44100,2.1,dev_split_2,TRUE,none
+fsd50k_12093,FSD50K,Siren_and_Emergency_vehicle,alarm_siren,CC-BY 3.0,Permissive with Attribution,44100,4.0,dev_split_3,TRUE,none
+fsd50k_12894,FSD50K,Car_crash_and_Impact,impact_crash,CC-BY 4.0,Permissive with Attribution,44100,3.8,dev_split_4,TRUE,none
+fsd50k_13401,FSD50K,Traffic_noise_and_roadway,background_normal,CC0 1.0,Permissive Commercial & Non-Commercial,44100,4.0,dev_split_5,TRUE,none
+fsd50k_14022,FSD50K,Distress_call,screaming_shouting,Non-Commercial Custom,Restricted,44100,3.0,eval_set,FALSE,unsupported_subjective_distress_label_and_restrictive_licence
+fsd50k_14890,FSD50K,Female_scream_noisy,screaming_shouting,CC-BY-NC 3.0,Research Only,22050,1.2,eval_set,FALSE,snr_below_threshold_and_excessive_clipping
+audioset_eval_01,AudioSet,Shout,screaming_shouting,YouTube Terms of Service,Evaluation reference only,44100,10.0,eval_reference,FALSE,external_stream_not_redistributable

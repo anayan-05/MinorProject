@@ -1,0 +1,94 @@
+{
+  "system": "PathPilot Audio Cue ML Subsystem",
+  "version": "1.0.0",
+  "updated_at": "2026-11-20",
+  "owner": "Debajyoti",
+  "taxonomy_policy": {
+    "principle": "Objective acoustic sound events only. Reject subjective distress/assault interpretations.",
+    "strictly_prohibited_labels": [
+      "assault",
+      "assault_detected",
+      "distress",
+      "fear",
+      "danger",
+      "emergency_confirmed"
+    ],
+    "safety_rule": "Audio cue is purely advisory. requires_user_confirmation must always be true. Never auto-trigger SOS."
+  },
+  "target_classes": [
+    {
+      "id": 0,
+      "name": "background_normal",
+      "description": "Standard ambient urban environment sounds, human conversation, laughter, footsteps, quiet streets, traffic hum, engine idling, wind.",
+      "is_safety_cue": false
+    },
+    {
+      "id": 1,
+      "name": "screaming_shouting",
+      "description": "High-intensity vocal acoustic events: human screams, loud shouts, aggressive vocal calls.",
+      "is_safety_cue": true
+    },
+    {
+      "id": 2,
+      "name": "alarm_siren",
+      "description": "Audible alert systems: emergency vehicle sirens, police sirens, ambulance sirens, car alarms, repetitive horn blasts.",
+      "is_safety_cue": true
+    },
+    {
+      "id": 3,
+      "name": "glass_breaking",
+      "description": "High-frequency shatter and impact sounds characteristic of breaking glass panes, windows, bottles.",
+      "is_safety_cue": true
+    },
+    {
+      "id": 4,
+      "name": "impact_crash",
+      "description": "Abrupt high-energy mechanical impact: vehicular collisions, metal crushing, heavy structural impact.",
+      "is_safety_cue": true
+    }
+  ],
+  "source_mappings": {
+    "ESC-50": {
+      "screaming": "screaming_shouting",
+      "siren": "alarm_siren",
+      "car_horn": "alarm_siren",
+      "glass_breaking": "glass_breaking",
+      "dog": "background_normal",
+      "chainsaw": "background_normal",
+      "engine": "background_normal",
+      "church_bells": "background_normal",
+      "airplane": "background_normal",
+      "laughter": "background_normal",
+      "footsteps": "background_normal",
+      "rain": "background_normal",
+      "sea_waves": "background_normal",
+      "crackling_fire": "background_normal"
+    },
+    "UrbanSound8K": {
+      "siren": "alarm_siren",
+      "car_horn": "alarm_siren",
+      "air_conditioner": "background_normal",
+      "children_playing": "background_normal",
+      "dog_bark": "background_normal",
+      "drilling": "background_normal",
+      "engine_idling": "background_normal",
+      "jackhammer": "background_normal",
+      "street_music": "background_normal",
+      "gun_shot": "EXCLUDED_UNSUPPORTED"
+    },
+    "FSD50K": {
+      "Screaming": "screaming_shouting",
+      "Yell": "screaming_shouting",
+      "Shout": "screaming_shouting",
+      "Siren": "alarm_siren",
+      "Civil_defense_siren": "alarm_siren",
+      "Bicycle_bell": "alarm_siren",
+      "Shatter": "glass_breaking",
+      "Glass": "glass_breaking",
+      "Crash": "impact_crash",
+      "Traffic_noise_and_roadway": "background_normal",
+      "Speech": "background_normal",
+      "Walk_and_footsteps": "background_normal"
+    }
+  }
+}

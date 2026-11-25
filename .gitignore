@@ -1,3 +1,6 @@
+# PathPilot root .gitignore
+# Rules specified in PathPilot Execution Handbook (Section 12)
+
 .env
 .env.*
 !.env.example
@@ -12,6 +15,8 @@ dist/
 android/.gradle/
 *.apk
 *.aab
+
+# Audio and ML Data & Artifacts (Store outside Git)
 data/raw/**
 data/processed/**
 artifacts/models/**
@@ -23,5 +28,12 @@ artifacts/models/**
 *.wav
 *.mp3
 *.flac
+*.ogg
+*.m4a
+
+# OS & Python caches
 .DS_Store
 Thumbs.db
+.coverage
+htmlcov/
+*.log
