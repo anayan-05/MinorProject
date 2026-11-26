@@ -1,0 +1,181 @@
+{
+  "dataset": "PathPilot Dataset B - Kolkata District Monthly Nighttime Lights",
+  "nasa_product": "VNP46A3",
+  "collection": "002",
+  "archive_collection_id": "5200",
+  "tile": "h26v06",
+  "year": 2025,
+  "months_covered": [
+    "2025-01",
+    "2025-02",
+    "2025-03",
+    "2025-04",
+    "2025-05",
+    "2025-06",
+    "2025-07",
+    "2025-08",
+    "2025-09",
+    "2025-10",
+    "2025-11",
+    "2025-12"
+  ],
+  "source_url": "https://ladsweb.modaps.eosdis.nasa.gov/archive/allData/5200/VNP46A3/2025/",
+  "boundary_file": "data\\geospatial\\boundaries\\kolkata_district_boundary.geojson",
+  "crs": "EPSG:32645",
+  "pixel_size_meters": 450.0,
+  "dimensions": {
+    "height": 48,
+    "width": 54,
+    "bands": 12
+  },
+  "transform": [
+    450.0,
+    0.0,
+    626400.0,
+    0.0,
+    -450.0,
+    2504250.0
+  ],
+  "nodata": "NaN",
+  "resampling": "nearest (no spatial interpolation)",
+  "clipping": "pixel center inside Kolkata District MultiPolygon (all_touched=False)",
+  "sds_layers": {
+    "radiance": "AllAngle_Composite_Snow_Free",
+    "quality": "AllAngle_Composite_Snow_Free_Quality",
+    "num_observations": "AllAngle_Composite_Snow_Free_Num",
+    "radiance_std": "AllAngle_Composite_Snow_Free_Std",
+    "land_water_mask": "Land_Water_Mask"
+  },
+  "quality_filtering": "Strict primary radiance retains only pixels where AllAngle_Composite_Snow_Free_Quality == 0, finite, != _FillValue (-999.9), and >= 0.0. Quality values 1 (Poor), 2 (Gap filled), and 255 (Fill) are masked as NoData in the primary radiance output. Original quality, observation count, std, and land/water mask layers are preserved separately per month.",
+  "units": "nWatts/(cm^2 sr)",
+  "scale_factor": 1.0,
+  "offset": 0.0,
+  "generated_at_utc": "2026-11-26T17:26:41.896908+00:00",
+  "outputs": {
+    "monthly_stack_geotiff": "kolkata_viirs_2025_monthly_radiance.tif",
+    "monthly_statistics_csv": "kolkata_viirs_2025_monthly_statistics.csv",
+    "monthly_preserved_dir": "C:\\Users\\amisa\\Downloads\\PathPilot_DATA\\Processed\\VIIRS\\2025\\monthly"
+  },
+  "source_granules": [
+    {
+      "month": 1,
+      "year_month": "2025-01",
+      "doy": "001",
+      "filename": "VNP46A3.A2025001.h26v06.002.2026064125342.h5",
+      "sha256": "f1f267274eed1390f44630e6169f6785a78fe9aae81467da7924fab00193520f",
+      "range_beginning_date": "2025-01-01",
+      "range_ending_date": "2025-01-31",
+      "local_granule_id": "VNP46A3.A2025001.h26v06.002.2026064125342.h5"
+    },
+    {
+      "month": 2,
+      "year_month": "2025-02",
+      "doy": "032",
+      "filename": "VNP46A3.A2025032.h26v06.002.2026064130433.h5",
+      "sha256": "342e7a624e910d194f1e7c760544cdc5266f96b8a0753d4cce72961dd19738a1",
+      "range_beginning_date": "2025-02-01",
+      "range_ending_date": "2025-02-28",
+      "local_granule_id": "VNP46A3.A2025032.h26v06.002.2026064130433.h5"
+    },
+    {
+      "month": 3,
+      "year_month": "2025-03",
+      "doy": "060",
+      "filename": "VNP46A3.A2025060.h26v06.002.2026064131806.h5",
+      "sha256": "d147a4eddd219d43469be0a91c77489e9cb00fcf270571cd68cfd532d7cf185e",
+      "range_beginning_date": "2025-03-01",
+      "range_ending_date": "2025-03-31",
+      "local_granule_id": "VNP46A3.A2025060.h26v06.002.2026064131806.h5"
+    },
+    {
+      "month": 4,
+      "year_month": "2025-04",
+      "doy": "091",
+      "filename": "VNP46A3.A2025091.h26v06.002.2026064132837.h5",
+      "sha256": "37ee1dd04ed1cd5b2934a8e852a5fd5ab873ea5c69c5d229de9f1b5364ab3201",
+      "range_beginning_date": "2025-04-01",
+      "range_ending_date": "2025-04-30",
+      "local_granule_id": "VNP46A3.A2025091.h26v06.002.2026064132837.h5"
+    },
+    {
+      "month": 5,
+      "year_month": "2025-05",
+      "doy": "121",
+      "filename": "VNP46A3.A2025121.h26v06.002.2026064133536.h5",
+      "sha256": "77c343c6e3f2e6ab1a98f966586671a4e89f2fac6d1ed64c67326faa883fab9d",
+      "range_beginning_date": "2025-05-01",
+      "range_ending_date": "2025-05-31",
+      "local_granule_id": "VNP46A3.A2025121.h26v06.002.2026064133536.h5"
+    },
+    {
+      "month": 6,
+      "year_month": "2025-06",
+      "doy": "152",
+      "filename": "VNP46A3.A2025152.h26v06.002.2026064134401.h5",
+      "sha256": "c21da347465fe6eb8415acdf9a2236e536319b1650b861032c95a9bf2a2fb550",
+      "range_beginning_date": "2025-06-01",
+      "range_ending_date": "2025-06-30",
+      "local_granule_id": "VNP46A3.A2025152.h26v06.002.2026064134401.h5"
+    },
+    {
+      "month": 7,
+      "year_month": "2025-07",
+      "doy": "182",
+      "filename": "VNP46A3.A2025182.h26v06.002.2026071170032.h5",
+      "sha256": "5e6a3dba98643e03de36e7fdf360c4da602314a0a66f83b778d20d4adf722716",
+      "range_beginning_date": "2025-07-01",
+      "range_ending_date": "2025-07-31",
+      "local_granule_id": "VNP46A3.A2025182.h26v06.002.2026071170032.h5"
+    },
+    {
+      "month": 8,
+      "year_month": "2025-08",
+      "doy": "213",
+      "filename": "VNP46A3.A2025213.h26v06.002.2026064135332.h5",
+      "sha256": "7ac6dfb735aa07cf98f042bd3a02122e2cbc941eb81365c9acd58a8535132bae",
+      "range_beginning_date": "2025-08-01",
+      "range_ending_date": "2025-08-31",
+      "local_granule_id": "VNP46A3.A2025213.h26v06.002.2026064135332.h5"
+    },
+    {
+      "month": 9,
+      "year_month": "2025-09",
+      "doy": "244",
+      "filename": "VNP46A3.A2025244.h26v06.002.2026064140402.h5",
+      "sha256": "af609a28f0b578568dd8830de109149289e86d958f3c0c672930aa996511167f",
+      "range_beginning_date": "2025-09-01",
+      "range_ending_date": "2025-09-30",
+      "local_granule_id": "VNP46A3.A2025244.h26v06.002.2026064140402.h5"
+    },
+    {
+      "month": 10,
+      "year_month": "2025-10",
+      "doy": "274",
+      "filename": "VNP46A3.A2025274.h26v06.002.2026064141440.h5",
+      "sha256": "322282d2328831cb911290a51984e40e4638c65caa84d6b8f4a75f28af2db340",
+      "range_beginning_date": "2025-10-01",
+      "range_ending_date": "2025-10-31",
+      "local_granule_id": "VNP46A3.A2025274.h26v06.002.2026064141440.h5"
+    },
+    {
+      "month": 11,
+      "year_month": "2025-11",
+      "doy": "305",
+      "filename": "VNP46A3.A2025305.h26v06.002.2026071171115.h5",
+      "sha256": "5880fd73c1a24784ceeaf61331d3746f0ebaa7d85c4fcfe6abe7b59cf6b0c8b7",
+      "range_beginning_date": "2025-11-01",
+      "range_ending_date": "2025-11-30",
+      "local_granule_id": "VNP46A3.A2025305.h26v06.002.2026071171115.h5"
+    },
+    {
+      "month": 12,
+      "year_month": "2025-12",
+      "doy": "335",
+      "filename": "VNP46A3.A2025335.h26v06.002.2026071171713.h5",
+      "sha256": "c436d072febb871d878a13961d8691bfd0184af902ee9ef85454d0521df7eb8d",
+      "range_beginning_date": "2025-12-01",
+      "range_ending_date": "2025-12-31",
+      "local_granule_id": "VNP46A3.A2025335.h26v06.002.2026071171713.h5"
+    }
+  ]
+}
